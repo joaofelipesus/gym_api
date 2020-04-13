@@ -1,0 +1,13 @@
+FROM ruby:2.6.6
+
+ENV INSTAL_PATH /gym_api
+
+RUN mkdir -p $INSTAL_PATH
+
+WORKDIR $INSTAL_PATH
+
+COPY Gemfile ./
+
+ENV BUNDLE_PATH /gems
+
+COPY . .

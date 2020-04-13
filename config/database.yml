@@ -1,0 +1,20 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+  host: postgres
+  username: postgres
+  
+development:
+  <<: *default
+  database: gym_api_development
+
+test:
+  <<: *default
+  database: gym_api_test
+
+production:
+  <<: *default
+  database: gym_api_production
+  username: gym_api
+  password: <%= ENV['GYM_API_DATABASE_PASSWORD'] %>
