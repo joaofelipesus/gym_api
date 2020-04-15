@@ -30,6 +30,8 @@ gem 'devise'
 gem 'simple_token_authentication', '~> 1.0' # see semver.org
 # Repository for collecting Locale data for Ruby on Rails I18n as well as other interesting, Rails related I18n stuff 
 gem 'rails-i18n', '~> 6.0.0' # For 6.0.0 or higher
+# A Scope & Engine based, clean, powerful, customizable and sophisticated paginator for Ruby webapps
+gem 'kaminari'
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
