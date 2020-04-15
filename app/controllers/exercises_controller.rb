@@ -1,5 +1,10 @@
 class ExercisesController < ApplicationController
 
+  def index
+    exercises = Exercise.all.order(:name).page params[:page]
+    render json: { exercises: exercises, total_pages: exercises.total_pages }, status: :ok
+  end
+
   def create
     exercise = Exercise.new exercise_params
     if exercise.save

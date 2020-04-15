@@ -6,6 +6,7 @@ class Exercise < ApplicationRecord
     inactive: 0,
     active: 1
   }
+  paginates_per 15
 
   private
 
