@@ -24,18 +24,20 @@ gem 'bootsnap', '>= 1.4.2', require: false
 
 # Use Rack CORS for handling Cross-Origin Resource Sharing (CORS), making cross-origin AJAX possible
 gem 'rack-cors'
-#Flexible authentication solution for Rails with Warden.
+# Flexible authentication solution for Rails with Warden.
 gem 'devise'
-#Simple (but safe) token authentication for Rails apps or API with Devise.
+# Simple (but safe) token authentication for Rails apps or API with Devise.
 gem 'simple_token_authentication', '~> 1.0' # see semver.org
+# Repository for collecting Locale data for Ruby on Rails I18n as well as other interesting, Rails related I18n stuff 
+gem 'rails-i18n', '~> 6.0.0' # For 6.0.0 or higher
 
 group :development, :test do
   # Call 'byebug' anywhere in the code to stop execution and get a debugger console
   gem 'byebug', platforms: [:mri, :mingw, :x64_mingw]
    gem 'rspec-rails', '~> 4.0.0'
-  #A library for generating fake data such as names, addresses, and phone numbers.
+  # A ibrary for generating fake data such as names, addresses, and phone numbers.
   gem 'faker'
-  #Factory Bot ♥ Rails
+  # Factory Bot ♥ Rails
   gem 'factory_bot_rails'
 end
 

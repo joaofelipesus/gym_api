@@ -1,0 +1,7 @@
+"pt-BR":
+  activerecord:
+    models:
+      exercise: Exercício
+    attributes:
+      exercise:
+        name: Nome
