@@ -60,4 +60,27 @@ RSpec.describe "Exercises", type: :request do
 
   end
 
+  describe 'update' do
+    
+    context 'changing status' do
+      
+      before :each do
+        @exercise = create(:exercise)
+      end
+
+      it 'is expected to return ok status' do
+        patch "/exercises/#{@exercise.id}", params: { exercise: { status: :inactive.to_s }}
+        expect(response).to have_http_status :ok
+      end
+
+      it 'is expected to save its value' do
+        expect(@exercise.inactive?).to be_falsey
+        patch "/exercises/#{@exercise.id}", params: { exercise: { status: :inactive.to_s }}
+        expect(@exercise.reload.inactive?).to be_truthy
+      end
+      
+    end
+
+  end
+
 end

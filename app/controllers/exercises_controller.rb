@@ -14,10 +14,19 @@ class ExercisesController < ApplicationController
     end
   end
 
+  def update
+    exercise = Exercise.find params[:id]
+    if exercise.update exercise_params
+      render json: {exercise: exercise }, status: :ok
+    else
+      render json: { errors: exercise.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
+
   private 
 
     def exercise_params
-      params.require(:exercise).permit(:name)
+      params.require(:exercise).permit(:name, :status)
     end
 
 end
