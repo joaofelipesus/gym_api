@@ -2,7 +2,7 @@ class ExercisesController < ApplicationController
 
   def index
     exercises = Exercise.all.order(:name).page params[:page]
-    render json: { exercises: exercises }, status: :ok
+    render json: { exercises: exercises, total_pages: exercises.total_pages }, status: :ok
   end
 
   def create
