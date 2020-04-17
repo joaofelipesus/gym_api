@@ -1,5 +1,6 @@
 class ExercisesController < ApplicationController
   rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
+  before_action :set_exercise, only: [:show, :update]
 
   def index
     exercises = Exercise.all.order(:name).page params[:page]
@@ -7,8 +8,7 @@ class ExercisesController < ApplicationController
   end
 
   def show
-    exercise = Exercise.find params[:id]
-    render json: { exercise: exercise }, status: :ok, except: [:created_at, :updated_at]
+    render json: { exercise: @exercise }, status: :ok, except: [:created_at, :updated_at]
   end
 
   def create
@@ -21,11 +21,10 @@ class ExercisesController < ApplicationController
   end
 
   def update
-    exercise = Exercise.find params[:id]
-    if exercise.update exercise_params
-      render json: { exercise: exercise }, status: :ok
+    if @exercise.update exercise_params
+      render json: { exercise: @exercise }, status: :ok
     else
-      render json: { errors: exercise.errors.full_messages }, status: unprocessable_entity
+      render json: { errors: @exercise.errors.full_messages }, status: unprocessable_entity
     end
   end
 
@@ -33,6 +32,10 @@ class ExercisesController < ApplicationController
 
     def exercise_params
       params.require(:exercise).permit(:name, :status)
+    end
+
+    def set_exercise
+      @exercise = Exercise.find params[:id]
     end
 
     def render_not_found
