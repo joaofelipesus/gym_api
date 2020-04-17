@@ -60,4 +60,59 @@ RSpec.describe "Exercises", type: :request do
 
   end
 
+
+  describe 'update' do
+    
+    context 'changing status' do
+      
+      before :each do
+        @exercise = create(:exercise)
+      end
+
+      it 'is expected to return ok status' do
+        patch "/exercises/#{@exercise.id}", params: { exercise: { status: :inactive.to_s }}
+        expect(response).to have_http_status :ok
+      end
+
+      it 'is expected to save its value' do
+        expect(@exercise.inactive?).to be_falsey
+        patch "/exercises/#{@exercise.id}", params: { exercise: { status: :inactive.to_s }}
+        expect(@exercise.reload.inactive?).to be_truthy
+      end
+      
+    end
+
+  end
+
+  describe 'show' do
+    
+    context 'when resource exist' do
+      before :each do
+        @exercise = create(:exercise)
+        get "/exercises/#{@exercise.id}"
+      end
+      it 'is expected to return the exercise' do
+        response_body = JSON.parse response.body
+        expect(response_body["exercise"]["name"]).to match @exercise.name
+      end
+      it 'is expected to return status ok' do
+        expect(response).to have_http_status :ok
+      end
+    end
+
+    context 'when resource doesnt exist' do
+      before :each do
+        get '/exercises/12312327615237'
+      end
+      it 'is expected to return error message "Exercício não encontrado"' do
+        response_body = JSON.parse response.body
+        expect(response_body["error"]).to match I18n.t :exercise_not_found
+      end
+      it 'is expected to return status :not_found' do
+        expect(response).to have_http_status :not_found
+      end
+    end
+
+  end
+
 end
