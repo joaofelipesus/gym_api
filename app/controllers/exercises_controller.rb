@@ -24,7 +24,7 @@ class ExercisesController < ApplicationController
     if @exercise.update exercise_params
       render json: { exercise: @exercise }, status: :ok
     else
-      render json: { errors: @exercise.errors.full_messages }, status: unprocessable_entity
+      render json: { errors: @exercise.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
