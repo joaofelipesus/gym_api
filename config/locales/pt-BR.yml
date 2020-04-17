@@ -5,3 +5,4 @@
     attributes:
       exercise:
         name: Nome
+  exercise_not_found: Exercício não encontrado.
