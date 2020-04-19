@@ -1,6 +1,6 @@
 class TrainingRoutine < ApplicationRecord
   belongs_to :user
-  validates_presence_of :status, :has_class_limit
+  validates_presence_of :status
   before_validation :set_status
   enum status: {
     progress: 1,

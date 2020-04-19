@@ -27,8 +27,6 @@ ActiveRecord::Schema.define(version: 2020_04_19_004812) do
     t.date "started_at"
     t.date "finished_at"
     t.integer "status"
-    t.integer "classes_to_attend"
-    t.boolean "has_class_limit"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["user_id"], name: "index_training_routines_on_user_id"

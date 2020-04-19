@@ -1,5 +1,6 @@
 Rails.application.routes.draw do
+  get '/training_routines/:user_id/progress', to: 'training_routines#progress'
+  resources :training_routines
   resources :exercises
   devise_for :users
-  # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
