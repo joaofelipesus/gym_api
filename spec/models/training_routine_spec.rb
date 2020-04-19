@@ -12,9 +12,6 @@ RSpec.describe TrainingRoutine, type: :model do
       it 'user' do
         @training_routine.user = nil
       end
-      it 'has_class_limit' do
-        @training_routine.has_class_limit = nil
-      end
     end
 
     context 'default values' do

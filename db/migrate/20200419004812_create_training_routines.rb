@@ -5,9 +5,7 @@ class CreateTrainingRoutines < ActiveRecord::Migration[6.0]
       t.date :started_at
       t.date :finished_at
       t.integer :status
-      t.integer :classes_to_attend
-      t.boolean :has_class_limit
-
+      
       t.timestamps
     end
   end
