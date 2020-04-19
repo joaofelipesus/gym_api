@@ -9,6 +9,15 @@ class TrainingRoutinesController < ApplicationController
     end
   end
 
+  def progress
+    training_routine = TrainingRoutine.where(user_id: params[:user_id]).progress.first
+    if training_routine
+      render json: { training_routine: training_routine }, status: :ok
+    else
+      render json: {}, status: :not_found
+    end
+  end
+
   private 
 
     def treaining_routine_params

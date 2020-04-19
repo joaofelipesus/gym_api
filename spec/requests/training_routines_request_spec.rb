@@ -37,4 +37,32 @@ RSpec.describe "TrainingRoutines", type: :request do
 
   end
 
+  describe 'progress' do
+    
+    before(:each) { @user = create(:user, kind: :user) }
+
+    context 'when user doesnt have a training routine' do
+      it 'is expected to return 404 status' do
+        get "/training_routines/#{@user.id}/progress"
+        expect(response).to have_http_status :not_found
+      end
+    end
+
+    context 'when user have a training_routine in progress' do
+      before :each do
+        @training_routine = create(:training_routine, user: @user)
+        get "/training_routines/#{@user.id}/progress"
+      end
+      it 'is expected to return ok status' do
+        expect(response).to have_http_status :ok
+      end
+      it 'is expected to return a training_routine object' do
+        response_body = JSON.parse response.body
+        training_routine = TrainingRoutine.new response_body["training_routine"]
+        expect(training_routine).to match @training_routine
+      end
+    end
+
+  end
+
 end
