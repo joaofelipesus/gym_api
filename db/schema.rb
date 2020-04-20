@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_20_212558) do
+ActiveRecord::Schema.define(version: 2020_04_20_213942) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -47,6 +47,18 @@ ActiveRecord::Schema.define(version: 2020_04_20_212558) do
     t.index ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true
   end
 
+  create_table "workout_exercises", force: :cascade do |t|
+    t.bigint "exercise_id", null: false
+    t.bigint "workout_id", null: false
+    t.integer "repetitions"
+    t.integer "rest_time"
+    t.float "reference_weight"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["exercise_id"], name: "index_workout_exercises_on_exercise_id"
+    t.index ["workout_id"], name: "index_workout_exercises_on_workout_id"
+  end
+
   create_table "workouts", force: :cascade do |t|
     t.bigint "training_routine_id", null: false
     t.string "name"
@@ -58,5 +70,7 @@ ActiveRecord::Schema.define(version: 2020_04_20_212558) do
   end
 
   add_foreign_key "training_routines", "users"
+  add_foreign_key "workout_exercises", "exercises"
+  add_foreign_key "workout_exercises", "workouts"
   add_foreign_key "workouts", "training_routines"
 end
