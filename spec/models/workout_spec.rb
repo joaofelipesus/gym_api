@@ -4,6 +4,7 @@ RSpec.describe Workout, type: :model do
 
   before :each do
     create(:user, kind: :user)
+    create(:exercise)
     create(:training_routine)
   end
 
@@ -15,6 +16,9 @@ RSpec.describe Workout, type: :model do
     end
     it 'is invalid when without training_routine' do
       @workout.training_routine = nil
+    end
+    it 'is invalid when without workout_exercises' do
+      @workout.workout_exercises = []
     end
   end
 

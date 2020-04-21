@@ -4,10 +4,11 @@ class Workout < ApplicationRecord
     progress: 1,
     complete: 2
   }
-  validates_presence_of :name
+  validates_presence_of :name, :workout_exercises
   validates_with WorkoutUniqueNameValidator
   has_many :workout_exercises
   before_validation :set_status
+  accepts_nested_attributes_for :workout_exercises
 
   private
 
