@@ -4,4 +4,6 @@ class Workout < ApplicationRecord
     progress: 1,
     complete: 2
   }
+  validates_presence_of :name
+  validates_with WorkoutUniqueNameValidator
 end
