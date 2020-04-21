@@ -6,6 +6,7 @@ class TrainingRoutine < ApplicationRecord
     progress: 1,
     complete: 2
   }
+  has_many :workouts
 
   private
 
