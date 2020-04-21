@@ -29,4 +29,10 @@ RSpec.describe Workout, type: :model do
     expect(workout).to be_valid
   end
 
+  it 'is expected to have default status as :progress' do
+    workout = build(:workout, status: nil)
+    expect(workout).to be_valid
+    expect(workout.progress?).to be_truthy
+  end
+
 end

@@ -6,4 +6,13 @@ class Workout < ApplicationRecord
   }
   validates_presence_of :name
   validates_with WorkoutUniqueNameValidator
+  has_many :workout_exercises
+  before_validation :set_status
+
+  private
+
+    def set_status
+      self.status = :progress unless self.status
+    end
+
 end
