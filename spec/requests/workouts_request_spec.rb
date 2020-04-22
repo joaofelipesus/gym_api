@@ -15,13 +15,11 @@ RSpec.describe "Workouts", type: :request do
           exercise_id: Exercise.last.id,
           repetitions: 15,
           rest_time: 30,
-          reference_weight: 40
         },
         {
           exercise_id: Exercise.first.id,
           repetitions: 15,
           rest_time: 30,
-          reference_weight: 80
         }
       ]
     }

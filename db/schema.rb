@@ -52,7 +52,6 @@ ActiveRecord::Schema.define(version: 2020_04_20_213942) do
     t.bigint "workout_id", null: false
     t.integer "repetitions"
     t.integer "rest_time"
-    t.float "reference_weight"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
     t.index ["exercise_id"], name: "index_workout_exercises_on_exercise_id"

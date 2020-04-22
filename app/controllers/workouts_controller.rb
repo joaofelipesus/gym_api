@@ -16,7 +16,7 @@ class WorkoutsController < ApplicationController
         :name,
         :classes_to_attend,
         :training_routine_id,
-        workout_exercises_attributes: [:exercise_id, :repetitions, :rest_time, :reference_weight]
+        workout_exercises_attributes: [:exercise_id, :repetitions, :rest_time]
       )
     end
 
