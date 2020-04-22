@@ -5,7 +5,6 @@ class CreateWorkoutExercises < ActiveRecord::Migration[6.0]
       t.references :workout, null: false, foreign_key: true
       t.integer :repetitions
       t.integer :rest_time
-      t.float :reference_weight
 
       t.timestamps
     end

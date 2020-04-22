@@ -23,6 +23,17 @@ RSpec.describe "Exercises", type: :request do
       it 'is expected to be order by name' do
         create(:exercise, name: 'Agachamento terra')
         create(:exercise, name: 'Supino')
+        get '/exercises'
+        response_body = JSON.parse response.body
+        expect(response_body["exercises"].first["name"]).to match "Agachamento terra"
+        expect(response_body["exercises"].last["name"]).to match "Supino"
+      end
+      it 'is expected to return all active exercises when active=true param is received' do
+        10.times { create(:exercise) }
+        Exercise.all.sample.update status: :inactive
+        get '/exercises?active=true'
+        response_body = JSON.parse response.body
+        expect(response_body["exercises"].size).to eq 9
       end
     end
     

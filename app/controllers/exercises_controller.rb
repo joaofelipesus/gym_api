@@ -3,8 +3,14 @@ class ExercisesController < ApplicationController
   before_action :set_exercise, only: [:show, :update]
 
   def index
-    exercises = Exercise.all.order(:name).page params[:page]
-    render json: { exercises: exercises, total_pages: exercises.total_pages }, status: :ok
+    if params[:active].present?
+      exercises = Exercise.active.order(:name)
+      return render json: { exercises: exercises }, status: :ok
+    else
+      exercises = Exercise.all.order(:name).page params[:page]
+      return render json: { exercises: exercises, total_pages: exercises.total_pages }, status: :ok
+    end
+    
   end
 
   def show
