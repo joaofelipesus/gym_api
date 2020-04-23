@@ -1,6 +1,7 @@
 namespace :e2e do
   desc "Generates data used in e2e tests to validate"
   task setup: :environment do
+    setup_exercises
     User.create([
       { email: 'user@user.com', password: '123123', kind: :user },
       { email: 'admin@admin.com', password: '123123', kind: :admin },
@@ -25,6 +26,11 @@ namespace :e2e do
   end
 
   private 
+
+    def setup_exercises
+      Exercise.delete_all
+      5.times { Exercise.create(name: Faker::Internet.ip_v6_address) }
+    end
 
     def create_user_with_workout
       user = User.create({ email: 'with@workout.com', password: '123123', kind: :user })
