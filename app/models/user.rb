@@ -3,6 +3,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :validatable
   validates_presence_of :kind
+  has_many :training_routines
   enum kind: {
     user: 1,
     admin: 2
