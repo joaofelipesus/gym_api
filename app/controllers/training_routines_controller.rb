@@ -3,7 +3,7 @@ class TrainingRoutinesController < ApplicationController
   def create
     training_routine = TrainingRoutine.new treaining_routine_params
     if training_routine.save
-      render json: { training_routine: training_routine }, status: :created
+      render json: { training_routine: training_routine }, status: :created, include: [:workouts]
     else
       render json: { errors: training_routine.errors.full_messages }, status: :unprocessable_entity
     end
