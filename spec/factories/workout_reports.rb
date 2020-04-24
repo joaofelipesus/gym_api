@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :workout_report do
-    workout { nil }
-    date { "2020-04-24" }
-    status { 1 }
+    workout { Workout.last }
+    date { Date.current }
+    status { :progress }
   end
 end
