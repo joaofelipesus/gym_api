@@ -9,7 +9,7 @@ class Workout < ApplicationRecord
   has_many :workout_exercises
   before_validation :set_status
   accepts_nested_attributes_for :workout_exercises
-  has_many :workout_reports
+  has_many :workout_reports, -> { order('created_at ASC') }
 
   private
 

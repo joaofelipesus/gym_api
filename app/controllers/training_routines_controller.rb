@@ -5,7 +5,7 @@ class TrainingRoutinesController < ApplicationController
     if @training_routine.save
       render json: { training_routine: training_routine_json }, status: :created
     else
-      render json: { errors: training_routine.errors.full_messages }, status: :unprocessable_entity
+      render json: { errors: @training_routine.errors.full_messages }, status: :unprocessable_entity
     end
   end
 
@@ -25,7 +25,7 @@ class TrainingRoutinesController < ApplicationController
     end
 
     def training_routine_json
-      @training_routine.to_json(:include => { workouts: { :include => :workout_reports }})
+      @training_routine.as_json(:include => { workouts: { :include => :workout_reports }})
     end
 
 end
