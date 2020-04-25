@@ -1,4 +1,5 @@
 class WorkoutsController < ApplicationController
+  rescue_from ActiveRecord::RecordNotFound, with: :render_not_found
 
   def create
     workout = Workout.new workout_params
@@ -8,6 +9,11 @@ class WorkoutsController < ApplicationController
       render json: { errors: workout.errors.full_messages }, status: :unprocessable_entity
     end
   end
+
+  def show
+    workout = Workout.find params[:id]
+    render json: { workout: workout }, status: :ok, include: [:workout_reports]
+  end 
 
   private
 

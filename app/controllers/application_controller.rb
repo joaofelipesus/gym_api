@@ -12,4 +12,9 @@ class ApplicationController < ActionController::API
     devise_parameter_sanitizer.permit(:sign_up, keys: attributes)
     devise_parameter_sanitizer.permit(:account_update, keys: attributes)
   end
+
+  def render_not_found model_name
+    render json: { error: "Não encontrado." }, status: :not_found
+  end
+
 end
