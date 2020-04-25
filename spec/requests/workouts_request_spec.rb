@@ -73,4 +73,37 @@ RSpec.describe "Workouts", type: :request do
     end
   end
 
+  describe 'show' do
+    
+    context 'when workout doesnt exist' do
+      before :each do
+        get "/workouts/#{404}"
+      end
+      it 'is expected to return status :not_found' do
+        expect(response).to have_http_status :not_found
+      end
+      it 'is expected to render not_found message' do
+        response_body = JSON.parse response.body
+        expect(response_body["error"]).to match "Não encontrado"
+      end
+    end
+
+    context 'when workout exist' do
+
+      before :each do
+        @workout = create(:workout)
+        get "/workouts/#{@workout.id}"
+      end
+
+      it 'is expected to return status :ok' do
+        expect(response).to have_http_status :ok
+      end
+      it 'is expected to return workout object' do
+        response_body = JSON.parse response.body
+        workout = Workout.new response_body["workout"]
+        expect(workout).to match @workout
+      end
+    end
+  end
+
 end
