@@ -11,8 +11,8 @@ class WorkoutsController < ApplicationController
   end
 
   def show
-    workout = Workout.find params[:id]
-    render json: { workout: workout }, status: :ok, include: [:workout_reports]
+    @workout = Workout.find params[:id]
+    render json: { workout: workout_json }, status: :ok
   end 
 
   private
@@ -24,6 +24,10 @@ class WorkoutsController < ApplicationController
         :training_routine_id,
         workout_exercises_attributes: [:exercise_id, :repetitions, :rest_time]
       )
+    end
+
+    def workout_json
+      @workout.as_json(:include => [:workout_reports, workout_exercises: { :include => :exercise }])
     end
 
 end

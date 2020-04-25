@@ -100,8 +100,11 @@ RSpec.describe "Workouts", type: :request do
       end
       it 'is expected to return workout object' do
         response_body = JSON.parse response.body
-        workout = Workout.new response_body["workout"]
-        expect(workout).to match @workout
+        workout = response_body["workout"]
+        expect(workout["id"]).to match @workout.id
+        expect(workout["name"]).to match @workout.name
+        expect(workout["classes_to_attend"]).to match @workout.classes_to_attend
+        expect(workout["workout_exercises"].size).to match @workout.workout_exercises.size
       end
     end
   end
