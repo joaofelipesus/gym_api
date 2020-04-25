@@ -1,7 +1,7 @@
 FactoryBot.define do
   factory :exercise_report do
-    workout_report { nil }
-    weight { 1.5 }
-    workout_exercise { nil }
+    workout_report { WorkoutReport.last }
+    weight { 15 }
+    workout_exercise { WorkoutExercise.last }
   end
 end
