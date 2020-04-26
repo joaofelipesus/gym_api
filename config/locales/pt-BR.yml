@@ -13,4 +13,5 @@
       workout_exercises:
         rest_time: Tempo de descanso
         repetitions: Repetições
+        series_number: Número de séries
   exercise_not_found: Exercício não encontrado.
