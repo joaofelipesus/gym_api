@@ -64,7 +64,7 @@ ActiveRecord::Schema.define(version: 2020_04_26_165357) do
     t.integer "rest_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
-    t.integer "suries_number"
+    t.integer "series_number"
     t.index ["exercise_id"], name: "index_workout_exercises_on_exercise_id"
     t.index ["workout_id"], name: "index_workout_exercises_on_workout_id"
   end

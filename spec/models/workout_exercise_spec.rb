@@ -27,6 +27,9 @@ RSpec.describe WorkoutExercise, type: :model do
       it 'is invalid when without repetitions' do
         @workout_exercise.repetitions = nil
       end
+      it 'is invalid when without series_number' do
+        @workout_exercise.series_number = nil
+      end
     end
 
   end
