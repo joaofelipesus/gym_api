@@ -51,7 +51,7 @@ namespace :e2e do
       user = create_user_with_training_routine email: 'with@workout.com'
       if user.valid?
         workout = Workout.new({name: 'A', classes_to_attend: 20, training_routine: user.training_routines.last})
-        workout_exercise = WorkoutExercise.new(repetitions: 20, rest_time: 40, exercise: Exercise.last)
+        workout_exercise = WorkoutExercise.new(repetitions: 20, rest_time: 40, exercise: Exercise.last, series_number: 3)
         workout.workout_exercises << workout_exercise
         workout.save
       end

@@ -6,6 +6,7 @@ class WorkoutReport < ApplicationRecord
   }
   validates_presence_of :status, :date
   before_validation :set_status
+  has_many :exercise_reports
 
   private 
 

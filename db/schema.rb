@@ -10,10 +10,20 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_24_212116) do
+ActiveRecord::Schema.define(version: 2020_04_26_165357) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "exercise_reports", force: :cascade do |t|
+    t.bigint "workout_report_id", null: false
+    t.float "weight"
+    t.bigint "workout_exercise_id", null: false
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["workout_exercise_id"], name: "index_exercise_reports_on_workout_exercise_id"
+    t.index ["workout_report_id"], name: "index_exercise_reports_on_workout_report_id"
+  end
 
   create_table "exercises", force: :cascade do |t|
     t.string "name"
@@ -54,6 +64,7 @@ ActiveRecord::Schema.define(version: 2020_04_24_212116) do
     t.integer "rest_time"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "series_number"
     t.index ["exercise_id"], name: "index_workout_exercises_on_exercise_id"
     t.index ["workout_id"], name: "index_workout_exercises_on_workout_id"
   end
@@ -77,6 +88,8 @@ ActiveRecord::Schema.define(version: 2020_04_24_212116) do
     t.index ["training_routine_id"], name: "index_workouts_on_training_routine_id"
   end
 
+  add_foreign_key "exercise_reports", "workout_exercises"
+  add_foreign_key "exercise_reports", "workout_reports"
   add_foreign_key "training_routines", "users"
   add_foreign_key "workout_exercises", "exercises"
   add_foreign_key "workout_exercises", "workouts"

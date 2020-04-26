@@ -6,7 +6,7 @@ class TrainingRoutine < ApplicationRecord
     progress: 1,
     complete: 2
   }
-  has_many :workouts, -> { order('created_at DESC') }
+  has_many :workouts, -> { order('name ASC') }
 
   private
 
