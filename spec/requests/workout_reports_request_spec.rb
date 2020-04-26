@@ -39,6 +39,33 @@ RSpec.describe "WorkoutReports", type: :request do
         expect(workout_report["date"]).to eq Date.current.to_s
       end
     end
+  end
+
+  describe 'progress' do
+    
+    context 'when user doesent have a workout_report in progress' do
+      it 'is expected to return status not_found' do
+        get '/workout_reports/404/progress'
+        expect(response).to have_http_status :not_found
+      end
+    end
+
+    context 'when user has a workout_report in progress' do
+      before :each do
+        workout_report = create(:workout_report)
+        user = User.user.last
+        get "/workout_reports/#{user.id}/progress"
+      end
+      it 'is expected to return status :ok' do
+        expect(response).to have_http_status :ok
+      end
+      it 'is expected to return workout_report' do
+        response_body = JSON.parse response.body 
+        workout_report = response_body["workout_report"]
+        expect(workout_report["id"]).to eq WorkoutReport.last.id
+        expect(workout_report["workout_id"]).to eq WorkoutReport.last.workout_id
+      end
+    end
 
   end
 
