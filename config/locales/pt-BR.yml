@@ -14,4 +14,7 @@
         rest_time: Tempo de descanso
         repetitions: Repetições
         series_number: Número de séries
+      workout_report:
+        workout_id: Treino
+        workout: Treino
   exercise_not_found: Exercício não encontrado.

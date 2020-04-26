@@ -15,9 +15,10 @@ RSpec.describe WorkoutReport, type: :model do
       expect(workout_report).to be_invalid
     end
 
-    it 'is invalid when without date' do
+    it 'is expected to have date value as Date.current' do
       workout_report = build(:workout_report, date: nil)
-      expect(workout_report).to be_invalid  
+      expect(workout_report).to be_valid 
+      expect(workout_report.date).to eq Date.current
     end
 
     it 'is expected to have default status as :progress' do
