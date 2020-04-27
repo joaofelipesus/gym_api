@@ -31,6 +31,13 @@ RSpec.describe WorkoutReport, type: :model do
       workout_report = build(:workout_report)
       expect(workout_report).to be_valid
     end
+
+    it 'is expected to generate exercise_reports after create' do
+      workout_report = create(:workout_report)
+      expect(workout_report).to be_valid
+      expect(workout_report.reload.exercise_reports.size).to eq 1  
+    end
+
   end
 
 end
