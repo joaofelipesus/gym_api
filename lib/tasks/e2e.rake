@@ -26,6 +26,7 @@ namespace :e2e do
     destroy_user email: 'with@duplicated.workout'
     destroy_user email: 'start@workout.com'
     destroy_user email: 'workout@in.progress'
+    destroy_exercises
   end
 
   private 
@@ -69,6 +70,12 @@ namespace :e2e do
       if user.valid?
         workout = user.training_routines.last.workouts.last
         WorkoutReport.create(workout: workout)
+      end
+    end
+
+    def destroy_exercises
+      Exercise.all.each do |exercise|
+        exercise.destroy if exercise.workout_exercises.empty?
       end
     end
 
