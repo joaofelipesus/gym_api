@@ -10,14 +10,13 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_26_165357) do
+ActiveRecord::Schema.define(version: 2020_04_27_125042) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "exercise_reports", force: :cascade do |t|
     t.bigint "workout_report_id", null: false
-    t.float "weight"
     t.bigint "workout_exercise_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
