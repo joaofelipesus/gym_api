@@ -17,4 +17,9 @@
       workout_report:
         workout_id: Treino
         workout: Treino
+      series_report:
+        exercise_report_id: Exercício
+        exercise_report: Exercício
+        weight_used: Peso utilizado
+        sequence_index: Sequência
   exercise_not_found: Exercício não encontrado.
