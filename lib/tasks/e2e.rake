@@ -36,6 +36,9 @@ namespace :e2e do
       user.training_routines.each do |training_routine|
         training_routine.workouts.each do |workout|
           workout.workout_exercises.each do |workout_exercise|
+            workout_exercise.exercise_reports.each do |exercise_report|
+              exercise_report.destroy
+            end
             workout_exercise.destroy
           end
           workout.workout_reports.each do |workout_report|
@@ -67,7 +70,7 @@ namespace :e2e do
 
     def create_user_with_workout_progress email: ''
       user = create_user_with_workout email: email
-      if user.valid?
+      if user
         workout = user.training_routines.last.workouts.last
         WorkoutReport.create(workout: workout)
       end
