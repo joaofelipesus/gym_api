@@ -20,12 +20,21 @@ class WorkoutReportsController < ApplicationController
     else
       render json: {}, status: :not_found
     end
-  end 
+  end
+
+  def update
+    workout_report = WorkoutReport.find params[:id]
+    if workout_report.update workout_report_params
+      render json: { workout_report: workout_report }, status: :ok
+    else
+      render json: { errors: workout_report.errors.full_messages }, status: :unprocessable_entity
+    end
+  end
 
   private
 
     def workout_report_params
-      params.require(:workout_report).permit(:workout_id)
+      params.require(:workout_report).permit(:workout_id, :status)
     end
 
     def workout_report_json
