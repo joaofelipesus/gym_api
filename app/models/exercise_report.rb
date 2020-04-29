@@ -6,6 +6,7 @@ class ExerciseReport < ApplicationRecord
     complete: 1
   }
   before_validation :set_status
+  has_many :series_reports
   
   private
 

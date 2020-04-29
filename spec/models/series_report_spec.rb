@@ -6,7 +6,7 @@ RSpec.describe SeriesReport, type: :model do
     create(:exercise)
     create(:user, kind: :user)
     create(:training_routine)
-    create(:workout)
+    create(:workout, workout_exercises: [build(:workout_exercise, series_number: 1)])
     create(:workout_report)
     create(:exercise_report)
   end
@@ -34,6 +34,12 @@ RSpec.describe SeriesReport, type: :model do
     it 'ok' do
       series_report = build(:series_report, weight_used: 15.5, sequence_index: 1, exercise_report: ExerciseReport.last)
       expect(series_report).to be_valid
+    end
+
+    it 'change exercise_report after all series_reports are created' do
+      series_report = create(:series_report)
+      expect(series_report).to be_valid
+      expect(ExerciseReport.last.complete?).to be_truthy
     end
 
   end
