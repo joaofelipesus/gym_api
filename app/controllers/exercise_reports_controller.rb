@@ -1,8 +1,8 @@
 class ExerciseReportsController < ApplicationController
 
   def show
-    @exercise_report = ExerciseReport.find params[:id]
-    render json: { exercise_report: exercise_report_json, last_series: last_series }, status: :ok  #, include: [:series_reports, :workout_report, workout_exercise: { include: [:exercise]}]
+    @exercise_report = ExerciseReport.includes(:workout_exercise).find params[:id]
+    render json: { exercise_report: exercise_report_json, last_series: last_series }, status: :ok
   end
 
   private 
@@ -12,12 +12,16 @@ class ExerciseReportsController < ApplicationController
     end
 
     def last_series
-      ExerciseReport
-                  .joins(workout_exercise: [workout: [:training_routine]])
-                  .where("training_routines.user_id = ?", current_user.id)
-                  .order(created_at: :desc)
-                  .first
-                  .series_reports
+      exercise_reports = ExerciseReport
+                                    .joins(workout_exercise: [workout: [:training_routine]])
+                                    .where("training_routines.user_id = ?", current_user.id)
+                                    .where("exercise_reports.status = 1")
+                                    .where("workout_exercises.id = ?", @exercise_report.workout_exercise.id)
+      unless exercise_reports.empty?
+        return exercise_reports.last.series_reports.order(:sequence_index)
+      else
+        return []
+      end
     end
 
 end
