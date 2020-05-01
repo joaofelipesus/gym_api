@@ -27,7 +27,14 @@ class WorkoutsController < ApplicationController
     end
 
     def workout_json
-      @workout.as_json(:include => [workout_reports: { :include => [:exercise_reports => :exercise]}, workout_exercises: { :include => :exercise }])
+      @workout.as_json(
+        include: [
+          workout_reports: {
+            include: [:exercise_reports]
+          }, 
+          workout_exercises: { include: :exercise }
+        ]
+      )
     end
 
 end

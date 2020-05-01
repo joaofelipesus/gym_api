@@ -10,17 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 2020_04_26_165357) do
+ActiveRecord::Schema.define(version: 2020_04_27_195223) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "exercise_reports", force: :cascade do |t|
     t.bigint "workout_report_id", null: false
-    t.float "weight"
     t.bigint "workout_exercise_id", null: false
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+    t.integer "status"
     t.index ["workout_exercise_id"], name: "index_exercise_reports_on_workout_exercise_id"
     t.index ["workout_report_id"], name: "index_exercise_reports_on_workout_report_id"
   end
@@ -30,6 +30,15 @@ ActiveRecord::Schema.define(version: 2020_04_26_165357) do
     t.integer "status"
     t.datetime "created_at", precision: 6, null: false
     t.datetime "updated_at", precision: 6, null: false
+  end
+
+  create_table "series_reports", force: :cascade do |t|
+    t.bigint "exercise_report_id", null: false
+    t.integer "sequence_index"
+    t.float "weight_used"
+    t.datetime "created_at", precision: 6, null: false
+    t.datetime "updated_at", precision: 6, null: false
+    t.index ["exercise_report_id"], name: "index_series_reports_on_exercise_report_id"
   end
 
   create_table "training_routines", force: :cascade do |t|
@@ -90,6 +99,7 @@ ActiveRecord::Schema.define(version: 2020_04_26_165357) do
 
   add_foreign_key "exercise_reports", "workout_exercises"
   add_foreign_key "exercise_reports", "workout_reports"
+  add_foreign_key "series_reports", "exercise_reports"
   add_foreign_key "training_routines", "users"
   add_foreign_key "workout_exercises", "exercises"
   add_foreign_key "workout_exercises", "workouts"
