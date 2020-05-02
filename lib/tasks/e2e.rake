@@ -13,6 +13,7 @@ namespace :e2e do
     create_user_with_workout email: 'start@workout.com'
     create_user_with_workout_progress email: 'workout@in.progress'
     create_user_with_workout email: 'user@start.workout'
+    create_user_with_workout_progress email: 'user@workout-report.progress'
   end
 
   desc "Clean all data used in e2e tests"
@@ -27,6 +28,7 @@ namespace :e2e do
     destroy_user email: 'start@workout.com'
     destroy_user email: 'workout@in.progress'
     destroy_user email: 'user@start.workout'
+    destroy_user email: 'user@workout-report.progress'
     destroy_exercises
   end
 
