@@ -1,6 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe "SeriesReports", type: :request do
+  include ActiveSupport::Testing::TimeHelpers
 
   before :each do
     sign_in create(:user, kind: :user)
@@ -8,7 +9,6 @@ RSpec.describe "SeriesReports", type: :request do
     create(:training_routine)
     create(:workout)
     create(:workout_report)
-    create(:exercise_report)
     @series_reports = [
       {
         exercise_report_id: ExerciseReport.last.id,
@@ -76,6 +76,36 @@ RSpec.describe "SeriesReports", type: :request do
       end
     end
 
+  end
+
+  describe 'progression' do
+    context 'when user has series reports to make a progression' do
+      before :each do
+        3.times do |index|
+          series_report = create(:series_report, sequence_index: index + 1, weight_used: 10)
+        end  
+        travel_to 3.days.ago do
+          create(:workout_report)
+          3.times { |index| create(:series_report, sequence_index: index + 1, weight_used: 15) }
+        end
+        travel_back
+        get "/series_reports/#{Exercise.last.id}/progression"
+        response_body = JSON.parse response.body
+        @weights_used = response_body["weigths_used"]
+      end
+      it 'is expected to return status :ok' do
+        expect(response).to have_http_status :ok
+      end
+      it 'is expected to return a list of hashes with date and mean_weight keys' do
+        expect(@weights_used[0].key?("date")).to be_truthy
+        expect(@weights_used[0].key?("mean_weight")).to be_truthy
+      end
+      it 'is expected to be order by created_at date' do
+        first_date = @weights_used.first["date"].to_date
+        last_date = @weights_used.last["date"].to_date
+        expect(first_date < last_date).to be_truthy
+      end
+    end
   end
 
 end
