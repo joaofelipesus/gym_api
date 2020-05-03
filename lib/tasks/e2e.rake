@@ -12,7 +12,10 @@ namespace :e2e do
     create_user_with_training_routine email: 'with@duplicated.workout'
     create_user_with_workout email: 'start@workout.com'
     create_user_with_workout_progress email: 'workout@in.progress'
-
+    create_user_with_workout email: 'user@start.workout'
+    create_user_with_workout_progress email: 'user@workout-report.progress'
+    create_user_with_workout_progress email: 'exercise@report.com'
+    create_user_with_workout_progress email: 'finish@workout.report'
   end
 
   desc "Clean all data used in e2e tests"
@@ -26,6 +29,10 @@ namespace :e2e do
     destroy_user email: 'with@duplicated.workout'
     destroy_user email: 'start@workout.com'
     destroy_user email: 'workout@in.progress'
+    destroy_user email: 'user@start.workout'
+    destroy_user email: 'user@workout-report.progress'
+    destroy_user email: 'exercise@report.com'
+    destroy_user email: 'finish@workout.report'
     destroy_exercises
   end
 
@@ -37,6 +44,7 @@ namespace :e2e do
         training_routine.workouts.each do |workout|
           workout.workout_exercises.each do |workout_exercise|
             workout_exercise.exercise_reports.each do |exercise_report|
+              exercise_report.series_reports.destroy_all
               exercise_report.destroy
             end
             workout_exercise.destroy
