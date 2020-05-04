@@ -65,4 +65,23 @@ RSpec.describe "TrainingRoutines", type: :request do
 
   end
 
+  describe 'update' do
+    before :each do
+      create(:exercise)
+      @training_routine = create(:training_routine)
+      create(:workout)
+      patch "/training_routines/#{@training_routine.id}", params: { training_routine: { status: "complete" } }
+    end
+    it 'is expected to return ok status' do
+      expect(response).to have_http_status :ok
+    end
+    it 'is expected to return a training_routine' do
+      response_body = JSON.parse response.body
+      expect(response_body.key?("training_routine")).to be_truthy
+    end
+    it 'is expected to save values' do
+      expect(@training_routine.reload.complete?).to be_truthy
+    end
+  end
+
 end
