@@ -26,7 +26,7 @@ class SeriesReportsController < ApplicationController
         mean_weight: mean_weight
       }
     end
-    render json: { weigths_used: weight_values }, status: :ok
+    render json: { weights_used: weight_values }, status: :ok
   end
 
   private 

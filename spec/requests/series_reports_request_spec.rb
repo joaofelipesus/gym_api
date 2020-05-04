@@ -91,7 +91,7 @@ RSpec.describe "SeriesReports", type: :request do
         travel_back
         get "/series_reports/#{Exercise.last.id}/progression"
         response_body = JSON.parse response.body
-        @weights_used = response_body["weigths_used"]
+        @weights_used = response_body["weights_used"]
       end
       it 'is expected to return status :ok' do
         expect(response).to have_http_status :ok
