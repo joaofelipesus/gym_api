@@ -19,7 +19,7 @@ class TrainingRoutinesController < ApplicationController
   end
 
   def progress
-    @training_routine = TrainingRoutine.where(user_id: params[:user_id]).progress.first
+    @training_routine = TrainingRoutine.where(user_id: current_user.id).progress.first
     if @training_routine
       render json: { training_routine: training_routine_json }, status: :ok
     else

@@ -3,7 +3,8 @@ require 'rails_helper'
 RSpec.describe "TrainingRoutines", type: :request do
 
   before :each do
-    sign_in create(:user, kind: :user)
+    @user = create(:user, kind: :user)
+    sign_in @user
   end
 
   describe 'create' do
@@ -23,7 +24,6 @@ RSpec.describe "TrainingRoutines", type: :request do
 
     context 'when with all attributes ok' do
       before :each do
-        @user = create(:user, kind: :user)
         post '/training_routines', params: { training_routine: {user_id: @user.id }}
       end
       it 'is expected to return created status' do
@@ -39,11 +39,9 @@ RSpec.describe "TrainingRoutines", type: :request do
 
   describe 'progress' do
     
-    before(:each) { @user = create(:user, kind: :user) }
-
     context 'when user doesnt have a training routine' do
       it 'is expected to return 404 status' do
-        get "/training_routines/#{@user.id}/progress"
+        get "/training_routines/progress"
         expect(response).to have_http_status :not_found
       end
     end
@@ -51,7 +49,7 @@ RSpec.describe "TrainingRoutines", type: :request do
     context 'when user have a training_routine in progress' do
       before :each do
         @training_routine = create(:training_routine, user: @user)
-        get "/training_routines/#{@user.id}/progress"
+        get "/training_routines/progress"
       end
       it 'is expected to return ok status' do
         expect(response).to have_http_status :ok
