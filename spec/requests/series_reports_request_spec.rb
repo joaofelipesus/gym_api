@@ -90,13 +90,15 @@ RSpec.describe "SeriesReports", type: :request do
         end
         travel_back
         get "/series_reports/#{Exercise.last.id}/progression"
-        response_body = JSON.parse response.body
-        @weights_used = response_body["weights_used"]
+        @response_body = JSON.parse response.body
+        @weights_used = @response_body["weights_used"]
       end
       it 'is expected to return status :ok' do
         expect(response).to have_http_status :ok
       end
       it 'is expected to return a list of hashes with date and mean_weight keys' do
+        expect(@response_body.key?("weights_used")).to be_truthy
+        expect(@response_body.key?("exercise")).to be_truthy
         expect(@weights_used[0].key?("date")).to be_truthy
         expect(@weights_used[0].key?("mean_weight")).to be_truthy
       end

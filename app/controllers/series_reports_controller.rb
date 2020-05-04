@@ -22,11 +22,11 @@ class SeriesReportsController < ApplicationController
       weights = exercise_report.series_reports.map { |series| series.weight_used }
       mean_weight = weights.sum / series_number
       {
-        date: exercise_report.created_at.to_date,
+        date: I18n.l(exercise_report.created_at.to_date),
         mean_weight: mean_weight
       }
     end
-    render json: { weights_used: weight_values }, status: :ok
+    render json: { weights_used: weight_values, exercise: Exercise.find(params[:exercise_id]) }, status: :ok
   end
 
   private 
