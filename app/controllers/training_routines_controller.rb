@@ -32,7 +32,7 @@ class TrainingRoutinesController < ApplicationController
     if training_routine
       render json: { can_be_complete: training_routine.can_be_complete? }, status: :ok
     else
-      redner json: {}, status: :not_found
+      render json: {}, status: :not_found
     end
   end
 

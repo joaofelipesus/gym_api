@@ -84,4 +84,43 @@ RSpec.describe "TrainingRoutines", type: :request do
     end
   end
 
+  describe 'can_be_complete' do
+
+    context 'when user has a active training_routine' do
+      before :each do
+        create(:exercise)
+        create(:training_routine)
+        create(:workout, classes_to_attend: 1)
+      end
+      after(:each) { expect(response).to have_http_status :ok }
+      after(:each) do 
+        response_body = JSON.parse response.body
+        expect(response_body.key?("can_be_complete")).to be_truthy
+      end
+      context 'when all workouts have as many workout_reports as classes_to_attend' do
+        it 'is expected to return true' do
+          create(:workout_report, status: :complete)
+          get "/training_routines/can_be_complete"
+          response_body = JSON.parse response.body
+          expect(response_body["can_be_complete"]).to be_truthy
+        end
+      end  
+      context 'when not all workouts has as many workout_report as requested' do
+        it 'is expected to return false' do
+          get "/training_routines/can_be_complete"
+          response_body = JSON.parse response.body
+          expect(response_body["can_be_complete"]).to be_falsey
+        end
+      end
+    end
+
+    context 'when user does not have a progress training_routine' do
+      it 'is expected to return :not_found status' do
+        get "/training_routines/can_be_complete"
+        expect(response).to have_http_status :not_found
+      end
+    end
+
+  end
+
 end
