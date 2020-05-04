@@ -4,7 +4,8 @@ RSpec.describe "WorkoutReports", type: :request do
 
   before :each do
     create(:exercise)
-    sign_in create(:user, kind: :user)
+    @user = create(:user, kind: :user)
+    sign_in @user
     create(:training_routine)
     create(:workout)
   end
@@ -42,19 +43,11 @@ RSpec.describe "WorkoutReports", type: :request do
   end
 
   describe 'progress' do
-    
-    context 'when user doesent have a workout_report in progress' do
-      it 'is expected to return status not_found' do
-        get '/workout_reports/404/progress'
-        expect(response).to have_http_status :not_found
-      end
-    end
 
     context 'when user has a workout_report in progress' do
       before :each do
         workout_report = create(:workout_report)
-        user = User.user.last
-        get "/workout_reports/#{user.id}/progress"
+        get "/workout_reports/progress"
       end
       it 'is expected to return status :ok' do
         expect(response).to have_http_status :ok

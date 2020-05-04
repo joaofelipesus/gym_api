@@ -13,7 +13,7 @@ class WorkoutReportsController < ApplicationController
     @workout_report = WorkoutReport
                                 .progress
                                 .joins(workout: [:training_routine])
-                                .where("training_routines.user_id = ?", params[:user_id])
+                                .where("training_routines.user_id = ?", current_user.id)
                                 .last
     if @workout_report
       render json: { workout_report: workout_report_json }, status: :ok
