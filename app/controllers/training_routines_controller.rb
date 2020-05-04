@@ -27,6 +27,15 @@ class TrainingRoutinesController < ApplicationController
     end
   end
 
+  def can_be_complete
+    training_routine = current_user.training_routines.progress.last
+    if training_routine
+      render json: { can_be_complete: training_routine.can_be_complete? }, status: :ok
+    else
+      redner json: {}, status: :not_found
+    end
+  end
+
   private 
 
     def training_routine_params
