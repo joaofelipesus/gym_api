@@ -11,6 +11,24 @@ class SeriesReportsController < ApplicationController
     end
   end
 
+  def progression
+    exercise_reports = ExerciseReport
+                                    .joins(workout_exercise: [workout: [:training_routine]])
+                                    .where("training_routines.user_id = ?", current_user.id)
+                                    .where("workout_exercises.exercise_id = ?", params[:exercise_id])
+                                    .order(:created_at)
+    weight_values = exercise_reports.includes(:series_reports, :workout_exercise).map do |exercise_report|
+      series_number = exercise_report.workout_exercise.series_number
+      weights = exercise_report.series_reports.map { |series| series.weight_used }
+      mean_weight = weights.sum / series_number
+      {
+        date: I18n.l(exercise_report.created_at.to_date),
+        mean_weight: mean_weight
+      }
+    end
+    render json: { weights_used: weight_values, exercise: Exercise.find(params[:exercise_id]) }, status: :ok
+  end
+
   private 
 
     def series_report_params
