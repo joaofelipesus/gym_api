@@ -16,6 +16,11 @@ namespace :e2e do
     create_user_with_workout_progress email: 'user@workout-report.progress'
     create_user_with_workout_progress email: 'exercise@report.com'
     create_user_with_workout_progress email: 'finish@workout.report'
+    create_user_with_training_routine email: 'with-progress@training.routine'
+    create_user_with_all_workouts_complete email: "with@ll-workouts.complete"
+    create_user_with_all_workouts_complete email: 'complete@training.routine'
+    create_user_with_workout email: 'user-with@workout.progress'
+    create_user_with_workout email: 'complete@other-training.routine'
   end
 
   desc "Clean all data used in e2e tests"
@@ -33,6 +38,11 @@ namespace :e2e do
     destroy_user email: 'user@workout-report.progress'
     destroy_user email: 'exercise@report.com'
     destroy_user email: 'finish@workout.report'
+    destroy_user email: 'with-progress@training.routine'
+    destroy_user email: 'with@ll-workouts.complete'
+    destroy_user email: 'complete@training.routine'
+    destroy_user email: 'user-with@workout.progress'
+    destroy_user email: 'complete@other-training.routine'
     destroy_exercises
   end
 
@@ -81,6 +91,15 @@ namespace :e2e do
       if user
         workout = user.training_routines.last.workouts.last
         WorkoutReport.create(workout: workout)
+      end
+    end
+
+    def create_user_with_all_workouts_complete email: ''
+      user = create_user_with_training_routine email: email
+      if user.valid?
+        workout_exercise = WorkoutExercise.new(exercise: Exercise.last, repetitions: 1, rest_time: 1, series_number: 1)
+        workout = Workout.create(name: Faker::Games::Zelda.character, classes_to_attend: 1, training_routine: user.training_routines.last, workout_exercises: [workout_exercise])
+        WorkoutReport.create(workout: workout, status: :complete)
       end
     end
 
