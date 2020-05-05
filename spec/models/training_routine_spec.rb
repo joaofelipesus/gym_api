@@ -49,4 +49,24 @@ RSpec.describe TrainingRoutine, type: :model do
     end
   end
 
+  describe 'complete' do
+    before :each do
+      @training_routine = create(:training_routine)
+      create(:exercise)
+      create(:workout, classes_to_attend: 1)
+      create(:workout_report, status: :complete)
+      @training_routine.complete
+    end
+    it 'is expected to change training_routine status to :complete' do
+      expect(@training_routine.reload.complete).to be_truthy
+    end
+    it 'is expected to set finished_at to current date' do
+      expect(@training_routine.reload.finished_at).to match Date.current
+    end
+    it 'is expected to change its workouts status to :complete' do
+      workout = @training_routine.reload.workouts.first
+      expect(workout.complete?).to be_truthy
+    end
+  end
+
 end

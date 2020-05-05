@@ -16,6 +16,14 @@ class TrainingRoutine < ApplicationRecord
     has_complete.all?(true)
   end
 
+  def complete
+    if self.update({ status: :complete, finished_at: Date.current })
+      self.workouts.each { |workout| workout.update(status: :complete) }
+      return true
+    end
+    false
+  end
+
   private
 
     def set_status
